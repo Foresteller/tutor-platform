@@ -23,6 +23,7 @@ class User extends Authenticatable
         'password',
         'role',
     ];
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
@@ -55,6 +56,7 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);

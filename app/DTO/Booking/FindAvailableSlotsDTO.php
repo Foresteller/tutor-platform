@@ -10,6 +10,5 @@ class FindAvailableSlotsDTO
         public readonly int $employeeId,
         public readonly int $serviceId,
         public readonly Carbon $date
-    )
-    {}
+    ) {}
 }

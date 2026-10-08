@@ -9,8 +9,7 @@ class RegisterService
 {
     public function __construct(
         public readonly UserRepository $repository
-    )
-    {}
+    ) {}
 
     public function handle(RegisterUserDto $dto)
     {

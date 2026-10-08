@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Service extends Model
 {
     protected $fillable = ['name', 'duration_minutes', 'price'];
+
     public function bookings()
     {
         return $this->hasMany(Booking::class);

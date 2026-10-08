@@ -8,13 +8,13 @@ use App\Repositories\BookingRepository;
 
 class BookingService
 {
-
     private BookingRepository $repository;
 
     public function __construct(BookingRepository $repository)
     {
         $this->repository = $repository;
     }
+
     public function handle(CreateBookingDto $dto): Booking
     {
         if ($this->repository->hasTimeConflict(
@@ -24,6 +24,7 @@ class BookingService
         )) {
             throw new \DomainException('TIME_SLOT_BUSY');
         }
+
         return $this->repository->create($dto);
     }
 }

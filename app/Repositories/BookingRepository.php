@@ -17,6 +17,7 @@ class BookingRepository
                     ->where('end_at', '>', $start);
             });
     }
+
     public function create(CreateBookingDto $data): Booking
     {
         return Booking::create([
@@ -24,14 +25,15 @@ class BookingRepository
             'service_id' => $data->serviceId,
             'employee_id' => $data->employeeId,
             'start_at' => $data->startAt,
-            'end_at' => $data->endAt
+            'end_at' => $data->endAt,
         ]);
     }
+
     public function getForDay(FindAvailableSlotsDTO $employeeId, Carbon $date)
     {
         return Booking::where('employee_id', $employeeId)
             ->whereDate('start_at', $date->toDateString())
             ->orderBy('start_at')
-            ->get(['start_at','end_at']);
+            ->get(['start_at', 'end_at']);
     }
 }
