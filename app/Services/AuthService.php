@@ -10,7 +10,7 @@ class AuthService
     public function login(string $email, string $password)
     {
         $user = User::where('email', $email)->firstOrFail();
-        if (! Hash::check($password, $user->password)) {
+        if ($user === null || ! Hash::check($password, $user->password)) {
             throw new \DomainException('INVALID_CREDENTIALS');
         }
 
