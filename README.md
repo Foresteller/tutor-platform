@@ -3,7 +3,7 @@
 REST API for online client appointment scheduling, featuring time-slot availability checks and conflict management to prevent overlapping bookings.
 
 ## Tech Stack
-**Backend:** PHP:8.2, Laravel 12(Sanctum)                                                        
+**Backend:** PHP:8.2, Laravel 11(Sanctum)                                                        
 **Database:** Postgres 15
 
 
