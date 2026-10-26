@@ -1,11 +1,11 @@
 # Booking & Scheduling System
 
-REST API для онлайн-записи клиентов на услуги. Проект предназначен для управления бронированиями, сотрудниками, расписанием и доступом пользователей.
-Основная задача предоставлять API для создания записей на услуги, поиска свободных временных интервалов и контроля пересечений бронирований.
+REST API for online client appointment scheduling, featuring time-slot availability checks and conflict management to prevent overlapping bookings.
 
 ## Tech Stack
-**Backend:** PHP, Laravel 11(Sanctum, Policies)                                                        |
+**Backend:** PHP:8.2, Laravel 12(Sanctum)                                                        
 **Database:** Postgres 15
+
 
 ## API
 
@@ -13,41 +13,67 @@ The API uses versioned routes under `/api/v1`.
 
 ### Authentication
 
-| Method | Endpoint           | Description                          | Authentication |
-| ------ | ------------------ | ------------------------------------ | -------------- |
-| POST   | `/api/v1/register` | Register a user                      | Not required   |
-| POST   | `/api/v1/login`    | Authenticate and obtain an API token | Not required   |
-| POST   | `/api/v1/logout`   | Revoke the current API token         | Required       |
-| GET    | `/api/v1/me`       | Retrieve the authenticated user      | Required       |
+- **Register a user:**
+    - **URL:** `/api/v1/register`
+    - **Method:** `POST`
+    - **Description:** Registers a new user.
 
-Protected endpoints use Laravel Sanctum authentication.
+- **Login:**
+    - **URL:** `/api/v1/login`
+    - **Method:** `POST`
+    - **Description:** Authenticates a user and returns an API token.
 
-Send the token in the HTTP request header:
+- **Logout:**
+    - **URL:** `/api/v1/logout`
+    - **Method:** `POST`
+    - **Description:** Logs out the authenticated user.
+
+- **Get the authenticated user:**
+    - **URL:** `/api/v1/me`
+    - **Method:** `GET`
+    - **Description:** Returns the currently authenticated user's information.
+
+### Bookings
+
+- **Find available time slots:**
+    - **URL:** `/api/v1/bookings/available`
+    - **Method:** `GET`
+    - **Description:** Returns available time slots for the specified employee, service, and date. Requires the `customer` role.
+
+- **Create a booking:**
+    - **URL:** `/api/v1/bookings`
+    - **Method:** `POST`
+    - **Description:** Creates a new booking. Requires the `customer` role.
+
+- **Update a booking:**
+    - **URL:** `/api/v1/bookings/{booking}`
+    - **Method:** `PATCH`
+    - **Description:** Updates an existing booking. Requires the `manager` or `admin` role.
+
+- **Delete a booking:**
+    - **URL:** `/api/v1/bookings/{booking}`
+    - **Method:** `DELETE`
+    - **Description:** Deletes an existing booking. Requires the `manager` or `admin` role.
+
+Protected routes require Laravel Sanctum authentication.
 
 ```http
 Authorization: Bearer YOUR_ACCESS_TOKEN
 Accept: application/json
 ```
 
-### Installation and Testing
-1. Clone the repository.
+## Installation
+
 ```bash
-ssh: git clone git@github.com:Foresteller/tutor-platform.git
-https: git clone https://github.com/Foresteller/tutor-platform.git
+git clone https://github.com/Foresteller/tutor-platform.git
+cd tutor-platform
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
 ```
-2. Install dependencies: 
+Run all tests:
 ```bash
-    composer install
+php artisan test
 ```
-3. Generate the application key: 
-```bash
-  php artisan key:generate
-```
-5. Run database migrations: 
-```bash
-  php artisan migrate
-```
-6. Configure environment variables:
-```bash
-   cp .env.example .env
-```
+
