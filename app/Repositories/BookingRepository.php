@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\DTO\Booking\CreateBookingDto;
-use App\DTO\Booking\FindAvailableSlotsDTO;
 use App\Models\Booking;
 use Carbon\Carbon;
 
@@ -15,7 +14,7 @@ class BookingRepository
             ->where(function ($q) use ($start, $end) {
                 $q->where('start_at', '<', $end)
                     ->where('end_at', '>', $start);
-            });
+            })->exists();
     }
 
     public function create(CreateBookingDto $data): Booking
@@ -29,7 +28,7 @@ class BookingRepository
         ]);
     }
 
-    public function getForDay(FindAvailableSlotsDTO $employeeId, Carbon $date)
+    public function getForDay(int $employeeId, Carbon $date)
     {
         return Booking::where('employee_id', $employeeId)
             ->whereDate('start_at', $date->toDateString())

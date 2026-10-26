@@ -47,4 +47,22 @@ class BookingController
 
         return response()->json($booking, 201);
     }
+
+    public function update(Request $request, Booking $booking, BookingService $service): JsonResponse
+    {
+        // Проверка через Policy (вызывает метод update в BookingPolicy)
+        $this->authorize('update', $booking);
+
+        // Здесь может быть логика обновления (или вызов сервиса)
+        return response()->json(['message' => 'Booking updated successfully']);
+    }
+
+    public function destroy(Booking $booking): JsonResponse
+    {
+        $this->authorize('delete', $booking);
+
+        $booking->delete();
+
+        return response()->json(status: 204);
+    }
 }

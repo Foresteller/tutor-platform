@@ -42,7 +42,7 @@ class FindAvailableSlotsService
                 'start_at' => $current->format('H:i'),
                 'end_at' => $current->copy()->addMinutes($duration)->format('H:i'),
             ];
-            $current->copy()->addMinutes(self::STEP);
+            $current->addMinutes(self::STEP);
         }
 
         return $slots;
